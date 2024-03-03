@@ -13,28 +13,108 @@ AirtableRead.configure({
 
 var base = new AirtableRead.base(AT_BASE);
 
-export const getAllUsers = async () => {
-    const requestURL = AT_URL + '/' + AT_BASE + '/' + AT_TBL_USERS;
+// const getAllUsers = async () => {
+//     //var users = [];
 
-    base('Users').select({
-        // maxRecords: 3,
-        // view: "Grid view"
-    }).eachPage(
-        function page(records, fetchNextPage){
-            records.forEach(
-                function(record){
-                    console.log("Retrieved: ", record.get('Username'));
-                }
-            );
-            fetchNextPage();
-    },
-    function done(err){
-        if(err){
-            console.log(err);
-            return;
-        }
-    }
-    );
+//     const users = await base('Users').select({
+//         // maxRecords: 3,
+//         // view: "Grid view"
+//     }).eachPage(
+//         function page(records, fetchNextPage){
+//             records.forEach(
+//                 function(record){
+//                     var userToAdd = {};
+//                     userToAdd.userName = record.get('Username');
+//                     userToAdd.fullName = record.get('Full Name');
+//                     userToAdd.email = record.get('Email');
+//                     if(userToAdd.fullName != null){
+//                         //console.log("pushing: ", userToAdd.fullName);
+//                         users.push(userToAdd);
+//                         console.log("added user: " + userToAdd.fullName);
+//                     }
+//                     //console.log("Added: ", userToAdd.fullName);
+//                 }
+//             );
+//             fetchNextPage();
+//     },
+//     function done(err){
+//         if(err){
+//             console.log(err);
+//             return;
+//         }
+//     }
+//     );
+//     return users;
+// }
+
+// base('Users').select({
+//     // Selecting the first 3 records in Grid view:
+//     maxRecords: 3,
+//     view: "Grid view"
+// }).eachPage(function page(records, fetchNextPage) {
+//     // This function (`page`) will get called for each page of records.
+
+//     records.forEach(function(record) {
+//         console.log('Retrieved', record.get('Username'));
+//     });
+
+//     // To fetch the next page of records, call `fetchNextPage`.
+//     // If there are more records, `page` will get called again.
+//     // If there are no more records, `done` will get called.
+//     fetchNextPage();
+
+// }, function done(err) {
+//     if (err) { console.error(err); return; }
+// });
+
+const getAllUsersTest = async () => {
+    const testArray = await ["one", "two", "three"] ;
+    return testArray;
 }
 
-//export default requests;
+const getAllUsers = async () => {
+    var initializedArray = ["fakeName1", "fakeName2"];
+    initializedArray = await base('Users').select({
+        // Selecting the first 3 records in Grid view:
+        maxRecords: 3,
+        view: "Grid view"
+    }).eachPage(function page(records, fetchNextPage) {
+        // This function (`page`) will get called for each page of records.
+    
+        records.forEach(function(record) {
+            console.log('Retrieved', record.get('Username'));
+            initializedArray.push(record.get('Username'));
+        });
+    
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        fetchNextPage();
+    
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+    return initializedArray;
+}
+
+const getAllRecordsAsync = async () => {
+    //let usersTable = base.getTable('Users');
+    let namesArray = [];
+    const records = await base('Users').select().all();
+    const usernames = await records.forEach(function(record){
+        console.log("username was: ", record.get('Username'));
+        namesArray.push(record.get('Username'));
+    })
+    await console.log("names are: ", namesArray);
+    // let results = await usersTable.selectRecordsAsync({
+    //     fields: ["Username"],
+    //     sort: [
+    //         {field: "Username"}
+    //     ]
+    // });
+    
+    // return results;
+    return namesArray;
+  };
+
+export default getAllRecordsAsync;
