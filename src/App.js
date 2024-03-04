@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import getAllUsers from "./API/airtableread";
-import getAllRecordsAsync from "./API/airtableread";
+import getAllUsernamesAsync from "./API/airtableread";
 
 import UsersTest from "./components/UsersTest";
 import getCount from "./utils/getCount";
@@ -13,9 +13,8 @@ function App(){
 
     const handleSubmit = async () => {
         console.log("handle submit called in App");
-        const fetchedUsers = await getAllRecordsAsync();
+        const fetchedUsers = await getAllUsernamesAsync();
         setUsersArray(fetchedUsers);
-        await console.log("Fetched users: ", await getAllRecordsAsync());
         await setFetchedUsers(true);
 
         //console.log("fetched users: " + fetchedUsers);

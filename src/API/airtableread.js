@@ -13,108 +13,27 @@ AirtableRead.configure({
 
 var base = new AirtableRead.base(AT_BASE);
 
-// const getAllUsers = async () => {
-//     //var users = [];
 
-//     const users = await base('Users').select({
-//         // maxRecords: 3,
-//         // view: "Grid view"
-//     }).eachPage(
-//         function page(records, fetchNextPage){
-//             records.forEach(
-//                 function(record){
-//                     var userToAdd = {};
-//                     userToAdd.userName = record.get('Username');
-//                     userToAdd.fullName = record.get('Full Name');
-//                     userToAdd.email = record.get('Email');
-//                     if(userToAdd.fullName != null){
-//                         //console.log("pushing: ", userToAdd.fullName);
-//                         users.push(userToAdd);
-//                         console.log("added user: " + userToAdd.fullName);
-//                     }
-//                     //console.log("Added: ", userToAdd.fullName);
-//                 }
-//             );
-//             fetchNextPage();
-//     },
-//     function done(err){
-//         if(err){
-//             console.log(err);
-//             return;
-//         }
-//     }
-//     );
-//     return users;
-// }
 
-// base('Users').select({
-//     // Selecting the first 3 records in Grid view:
-//     maxRecords: 3,
-//     view: "Grid view"
-// }).eachPage(function page(records, fetchNextPage) {
-//     // This function (`page`) will get called for each page of records.
-
-//     records.forEach(function(record) {
-//         console.log('Retrieved', record.get('Username'));
-//     });
-
-//     // To fetch the next page of records, call `fetchNextPage`.
-//     // If there are more records, `page` will get called again.
-//     // If there are no more records, `done` will get called.
-//     fetchNextPage();
-
-// }, function done(err) {
-//     if (err) { console.error(err); return; }
-// });
-
-const getAllUsersTest = async () => {
-    const testArray = await ["one", "two", "three"] ;
-    return testArray;
-}
-
-const getAllUsers = async () => {
-    var initializedArray = ["fakeName1", "fakeName2"];
-    initializedArray = await base('Users').select({
-        // Selecting the first 3 records in Grid view:
-        maxRecords: 3,
-        view: "Grid view"
-    }).eachPage(function page(records, fetchNextPage) {
-        // This function (`page`) will get called for each page of records.
-    
-        records.forEach(function(record) {
-            console.log('Retrieved', record.get('Username'));
-            initializedArray.push(record.get('Username'));
-        });
-    
-        // To fetch the next page of records, call `fetchNextPage`.
-        // If there are more records, `page` will get called again.
-        // If there are no more records, `done` will get called.
-        fetchNextPage();
-    
-    }, function done(err) {
-        if (err) { console.error(err); return; }
-    });
-    return initializedArray;
-}
-
-const getAllRecordsAsync = async () => {
-    //let usersTable = base.getTable('Users');
+export const getAllUsernamessAsync = async () => {
     let namesArray = [];
     const records = await base('Users').select().all();
     const usernames = await records.forEach(function(record){
-        console.log("username was: ", record.get('Username'));
-        namesArray.push(record.get('Username'));
+        console.log("username was: ", record.get('Full Name'));
+        namesArray.push(record.get('Full Name'));
     })
-    await console.log("names are: ", namesArray);
-    // let results = await usersTable.selectRecordsAsync({
-    //     fields: ["Username"],
-    //     sort: [
-    //         {field: "Username"}
-    //     ]
-    // });
-    
-    // return results;
+
     return namesArray;
   };
 
-export default getAllRecordsAsync;
+export const getAllPositionsAsync = async () => {
+    let positionsArray = [];
+    const positionRecords = await base('Positions').select().all();
+    const positionNames = await positionRecords.forEach(function(rec){
+        console.log("position name was: ", rec.get('Name'));
+        positionsArray.push(rec.get('Name'));
+    });
+    return positionsArray;
+}
+
+export default getAllUsernamessAsync;
