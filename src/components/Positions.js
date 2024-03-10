@@ -9,23 +9,23 @@ function Positions(){
     useEffect(() => {
         const fetchPositions = async () => {
             console.log("called fetchPositions()");
-            const renderedPositions = await getAllPositionsAsync();
-            setPositionsArray(renderedPositions);
+            const fetchedPositions = await getAllPositionsAsync();
+            setPositionsArray(fetchedPositions);
 
         };
         fetchPositions();
     }, []);
-
-    // const renderedPositions = positionsArray.map((position, index) => {
-    //     return <ShowItem item={position} key={index} />
-    // })
+    const renderedPositions = positionsArray.map((position, index) => {
+        return (<ShowItem item={position} optionName={'positions'} radioOrCheck={'radio'} key={index} />)
+    })
     
     return(
-        <div className="container">
-            <div className="row">
-                {positionsArray.map((position, index) => (
-                    <ShowItem item={position} key={index} />
-                ))}
+        <div>
+            <h3>Positions:</h3>
+            <div className="container">
+                <div className="row">
+                    {renderedPositions}
+                </div>
             </div>
         </div>
     )

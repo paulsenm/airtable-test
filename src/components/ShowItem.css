@@ -1,0 +1,30 @@
+.item-option {
+    transition: .5s;
+}
+.item-option:hover{
+    transition: .5s;
+    box-shadow: 3px;
+
+}
+
+/* .item-option:checked{
+    background-color: rgb(9, 0, 128) !important;
+}
+
+.item-option:checked:hover{
+    background-color: yellow;
+} */
+
+.check-test:has(:checked){
+    background-color: rgb(121, 177, 99) !important;
+}
+
+.check-test:hover{
+    box-shadow: 5px 5px black;
+}
+.check-test{
+    width: fit-content;
+    border: 1px solid black;
+    padding: 0;
+    border-radius: 7px;
+}

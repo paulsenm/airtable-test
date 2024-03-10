@@ -36,4 +36,13 @@ export const getAllPositionsAsync = async () => {
     return positionsArray;
 }
 
+export const getAllSecGroups = async () => {
+    let secGroupsArray = [];
+    const secGroupRecords = await base('AD Security Group').select().all();
+    const secGroupNames = await secGroupRecords.forEach(function(rec){
+        secGroupsArray.push(rec.get('Name'));
+    });
+    return secGroupsArray;
+}
+
 export default getAllUsernamessAsync;
